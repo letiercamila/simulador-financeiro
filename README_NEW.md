@@ -112,6 +112,30 @@ O relatório será gerado em `target/site/jacoco/index.html` quando o profile `c
 
 ---
 
+## 🐳 Executando com Docker
+
+### 1. Gerar o JAR da aplicação
+
+```bash
+./mvnw clean package -DskipTests
+```
+
+### 2. Construir a imagem Docker
+
+```bash
+docker build -f src/main/docker/Dockerfile.jvm -t simulador-financeiro .
+```
+
+### 3. Executar o container
+
+```bash
+docker run -i --rm -p 8080:8080 simulador-financeiro
+```
+
+A aplicação estará disponível em: http://localhost:8080
+
+---
+
 ## 🔐 Melhorias Futuras / Observações
 
 - Adicionar autenticação e autorização (JWT/OIDC).
@@ -123,13 +147,16 @@ O relatório será gerado em `target/site/jacoco/index.html` quando o profile `c
 
 ## 📬 Postman / Collection
 
-A collection atualizada está disponível em:
-
-```
-docs/postman/Simulacoes_API_Atualizada.postman_collection.json
-```
-
-Pronta para importação e uso no Postman.
+Se você quiser, posso adicionar uma `docs/postman` com uma collection com os principais endpoints para importação no Postman.
 
 ---
 
+## 🧭 Como contribuir
+
+1. Crie uma branch com seu feature/fix
+2. Abra um Pull Request apontando para `main`
+3. Inclua testes quando alterar comportamento
+
+---
+
+Se quiser, eu adiciono também um exemplo de workflow GitHub Actions que executa testes e cobertura usando JDK 21 (para o passo de cobertura). Basta pedir que eu gere o arquivo em `.github/workflows/`.

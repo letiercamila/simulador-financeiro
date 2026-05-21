@@ -1,0 +1,60 @@
+{
+    "info": {
+        "_postman_id": "simulador-financeiro-collection",
+        "name": "Simulador Financeiro API",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+        "description": "Coleção mínima para testar endpoints principais: criar e consultar simulação"
+    },
+    "item": [
+        {
+            "name": "Criar Simulação",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"valorInicial\": 1000.00,\n  \"taxaJurosMensal\": 1.2,\n  \"prazoMeses\": 12\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:8080/api/simulacao",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "simulacao"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Consultar Simulação (exemplo)",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:8080/api/simulacao/{{simulacaoId}}",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "8080",
+                    "path": [
+                        "api",
+                        "simulacao",
+                        "{{simulacaoId}}"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}
