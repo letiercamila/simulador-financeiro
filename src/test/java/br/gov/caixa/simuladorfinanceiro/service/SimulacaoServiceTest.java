@@ -1,4 +1,4 @@
-package br.gov.caixa.simuladorfinanceiro;
+package br.gov.caixa.simuladorfinanceiro.service;
 
 import br.gov.caixa.simuladorfinanceiro.dto.request.SimulacaoRequestDto;
 import br.gov.caixa.simuladorfinanceiro.dto.response.SimulacaoResponseDto;
@@ -51,7 +51,6 @@ public class SimulacaoServiceTest {
     @Test
     public void testRoundingBehavior() {
         SimulacaoRequestDto req = new SimulacaoRequestDto();
-        // value that will be rounded
         req.setValorInicial(new BigDecimal("1000.005"));
         req.setTaxaJurosMensal(new BigDecimal("0.333"));
         req.setPrazoMeses(2);
@@ -59,7 +58,6 @@ public class SimulacaoServiceTest {
         SimulacaoResponseDto resp = service.simularEPersistir(req);
 
         assertNotNull(resp.getId());
-        // valorInicial rounded to 1000.01
         assertTrue(resp.getValorTotal().compareTo(BigDecimal.ZERO) > 0);
         assertEquals(2, resp.getMemoriaCalculo().size());
     }

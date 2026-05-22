@@ -99,25 +99,13 @@ O projeto contém testes unitários e de integração (QuarkusTest).
 
 ### Cobertura de Testes (opt-in)
 
-JaCoCo foi movido para um profile Maven chamado `coverage` porque a instrumentação pode falhar com Java 25. Para gerar relatórios de cobertura, execute em um ambiente com JDK compatível com o agente JaCoCo (por exemplo, JDK 21) ou ajuste seu CI para usar JDK 21 apenas para a etapa de cobertura.
-
-Exemplo (em CI ou local com JDK 21):
-
-```bash
-# executa verify com JaCoCo ativo
-./mvnw -Pcoverage verify
-```
-
-O relatório será gerado em `target/site/jacoco/index.html` quando o profile `coverage` for executado com sucesso.
-
+A cobertura do módulo foi validade usando o recurso
 ---
 
 ## 🔐 Melhorias Futuras / Observações
 
 - Adicionar autenticação e autorização (JWT/OIDC).
-- Persistência em banco relacional externo (Postgres, Oracle, etc.).
 - Adicionar mapeamento de erros/ExceptionMapper para respostas padronizadas (400/404/500).
-- Habilitar cobertura contínua em CI usando um runner JDK 21 para JaCoCo.
 
 ---
 

@@ -64,7 +64,6 @@ public class SimulacaoService {
         simulacao.setMemoriaCalculo(memoria);
 
         em.persist(simulacao);
-        // ensure memoria items are persisted as cascade is configured
         return mapToResponse(simulacao);
     }
 
@@ -92,7 +91,7 @@ public class SimulacaoService {
         if (entity == null) {
             return null;
         }
-        // ensure memoria is loaded
+        
         if (entity.getMemoriaCalculo() != null) {
             entity.getMemoriaCalculo().size();
         }

@@ -3,6 +3,8 @@ package br.gov.caixa.simuladorfinanceiro.rest;
 import br.gov.caixa.simuladorfinanceiro.dto.request.SimulacaoRequestDto;
 import br.gov.caixa.simuladorfinanceiro.dto.response.SimulacaoResponseDto;
 import br.gov.caixa.simuladorfinanceiro.service.SimulacaoService;
+import io.micrometer.core.annotation.Counted;
+import io.micrometer.core.annotation.Timed;
 import jakarta.inject.Inject;
 import jakarta.validation.Valid;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -18,7 +20,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PathParam;
 
 @Path("/api/simulacao")
-public class SimuladorFInanceiroRest {
+public class SimuladorFinanceiroRest {
 
     @Inject
     SimulacaoService simulacaoService;
@@ -27,6 +29,8 @@ public class SimuladorFInanceiroRest {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Operation(summary = "Realizar simulação e persistir")
+    @Timed
+    @Counted
     @APIResponses(value = {
             @APIResponse(responseCode = "201", description = "Simulação criada"),
             @APIResponse(responseCode = "400", description = "Requisição inválida"),
@@ -38,9 +42,14 @@ public class SimuladorFInanceiroRest {
             return Response.created(java.net.URI.create("/api/simulacao/" + response.getId()))
                     .entity(response)
                     .build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
         } catch (Exception e) {
-            e.printStackTrace();
-            return Response.serverError().build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erro ao processar simulação")
+                    .build();
         }
     }
 
@@ -48,10 +57,24 @@ public class SimuladorFInanceiroRest {
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSimulacao(@PathParam("id") Long id) {
-        SimulacaoResponseDto dto = simulacaoService.findById(id);
-        if (dto == null) {
-            return Response.status(Response.Status.NOT_FOUND).build();
+        try {
+            SimulacaoResponseDto dto = simulacaoService.findById(id);
+
+            if (dto == null) {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+            return Response.ok(dto).build();
+
+        } catch (IllegalArgumentException e) {
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage())
+                    .build();
+
+        } catch (Exception e) {
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                    .entity("Erro ao buscar simulação")
+                    .build();
         }
-        return Response.ok(dto).build();
     }
 }

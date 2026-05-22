@@ -1,8 +1,7 @@
-package br.gov.caixa.simuladorfinanceiro;
+package br.gov.caixa.simuladorfinanceiro.facade;
 
 import br.gov.caixa.simuladorfinanceiro.dto.request.SimulacaoRequestDto;
 import br.gov.caixa.simuladorfinanceiro.dto.response.SimulacaoResponseDto;
-import br.gov.caixa.simuladorfinanceiro.facade.RealizarSimulacaoFacade;
 import br.gov.caixa.simuladorfinanceiro.service.SimulacaoService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -12,7 +11,7 @@ import java.math.BigDecimal;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-public class RealizarSimulacaoFacadeTest {
+public class SimulacaoFacadeTest {
 
     @Test
     public void testFacadeDelegatesToService() {
