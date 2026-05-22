@@ -99,7 +99,8 @@ O projeto contém testes unitários e de integração (QuarkusTest).
 
 ### Cobertura de Testes (opt-in)
 
-A cobertura do módulo foi validade usando o recurso
+JaCoCo foi movido para um profile Maven chamado `coverage` porque a instrumentação pode falhar com Java 25. Para gerar relatórios de cobertura, execute em um ambiente com JDK compatível com o agente JaCoCo (por exemplo, JDK 21) ou ajuste seu CI para usar JDK 21 apenas para a etapa de cobertura.
+
 ---
 
 ## 🔐 Melhorias Futuras / Observações
