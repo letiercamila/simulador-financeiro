@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -28,9 +30,18 @@ public class SimulacaoFacadeTest {
                 .build();
 
         when(mocked.simularEPersistir(req)).thenReturn(resp);
-
         SimulacaoResponseDto result = facade.realizarSimulacao(req);
 
         assertEquals(resp.getValorTotal(), result.getValorTotal());
+        Mockito.verify(mocked).simularEPersistir(req);
+    }
+
+    @Test
+    public void testFacadePropagatesException() {
+        SimulacaoService mocked = Mockito.mock(SimulacaoService.class);
+        RealizarSimulacaoFacade facade = new RealizarSimulacaoFacade(mocked);
+        when(mocked.simularEPersistir(Mockito.any())).thenThrow(new RuntimeException("Erro"));
+
+        assertThrows(RuntimeException.class, () -> facade.realizarSimulacao(new SimulacaoRequestDto()));
     }
 }
